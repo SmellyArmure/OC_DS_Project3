@@ -1,0 +1,11 @@
+CLEANING NOTEBOOK
+0.0 Importing Modules
+0.1 Importing dataset
+0.2 First Overview
+0.3 Memory usage reduction
+0.4 Pandas Data Profiling report
+1. Filtering out non relevant columns
+2. Almost empty columns
+3. Columns with redundant information
+4. Dropping inoperable rows
+5. Dealing with duplicates
