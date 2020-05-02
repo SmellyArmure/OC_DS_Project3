@@ -279,7 +279,7 @@ python-stdnum==1.13
 python-utils==2.4.0
 pytz==2018.9
 PyWavelets==1.1.1
-PyYAML==3.13
+PyYAML==5.1
 pyzmq==19.0.0
 qtconsole==4.7.3
 QtPy==1.9.0
