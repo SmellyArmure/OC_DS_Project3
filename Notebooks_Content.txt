@@ -1,11 +1,23 @@
 CLEANING NOTEBOOK
-0.0 Importing Modules
-0.1 Importing dataset
-0.2 First Overview
-0.3 Memory usage reduction
-0.4 Pandas Data Profiling report
-1. Filtering out non relevant columns
-2. Almost empty columns
-3. Columns with redundant information
-4. Dropping inoperable rows
-5. Dealing with duplicates
+
+0 Preliminaries
+	0.0 Importing Packages and Modules
+	0.1 Importing a sample of the dataset
+	0.2 Memory usage reduction
+	0.3 First Overview
+1 Feature selection
+	1.1 Filtering out non relevant columns
+	1.2 Almost empty columns
+	1.3 Columns with redundant information
+2 Dealing with missing or erroneous data
+	2.1 'product_name' column
+	2.2 'code' column
+	2.3 'quantity' column
+	2.4 'XXX_100g' nutritional components columns
+	2.5 'energy_100g' columns
+3 Dealing with duplicates
+	3.1 duplicates on code column
+	3.2 Duplicates on identification key-columns
+4 Dropping inoperable rows
+	Condition 1:
+	Condition 2:
