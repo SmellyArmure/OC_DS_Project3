@@ -15,6 +15,8 @@ CLEANING NOTEBOOK
 	2.3 'quantity' column
 	2.4 'XXX_100g' nutritional components columns
 	2.5 'energy_100g' columns
+	(2.6 'nutriscore' columns)
+	(2.7 nova columns)
 3 Dealing with duplicates
 	3.1 duplicates on code column
 	3.2 Duplicates on identification key-columns
