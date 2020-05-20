@@ -1,5 +1,6 @@
 CLEANING NOTEBOOK
 
+"Concevez une application au service de la santé publique"
 0 Preliminaries
 	0.0 Importing Packages and Modules
 	0.1 Importing a sample of the dataset
@@ -15,11 +16,24 @@ CLEANING NOTEBOOK
 	2.3 'quantity' column
 	2.4 'XXX_100g' nutritional components columns
 	2.5 'energy_100g' columns
-	(2.6 'nutriscore' columns)
-	(2.7 nova columns)
+		2.5.a Getting rid of outliers
+		2.5.b Calculating an energy_100g value from main nutritional components:
+		2.5.c Determining the unit of energy columns
+	2.6 Category columns
+		2.6.* Unknown
+		2.6.a Beverages
+		2.6.b Fruits and vegetables
+		2.6.c Fats
+		2.6.d Cheese
+	2.7 'nutriscore' columns
+		2.7.a Checking nutriscore columns
+		2.7.b Calculation of preliminary values for Nutriscore calculation
+		2.7.c Nutriscore calculation
+		2.7.d Nutrigrade determination
 3 Dealing with duplicates
-	3.1 duplicates on code column
+	3.1 Duplicates on 'code' column
 	3.2 Duplicates on identification key-columns
 4 Dropping inoperable rows
 	Condition 1:
 	Condition 2:
+5 Exporting cleaned dataframe
