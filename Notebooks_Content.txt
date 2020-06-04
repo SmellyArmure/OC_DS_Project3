@@ -11,7 +11,10 @@ CLEANING NOTEBOOK
 	1.2 Almost empty columns
 	1.3 Columns with redundant information
 2 Dealing with missing or erroneous data
-	2.0 'countries' column
+	2.0 Categorical columns with list of categories
+		Preparing for cleaning
+		Detecting columns with lists
+		Splitting, extracting main, dropping less frequent values
 	2.1 'product_name' column
 	2.2 'code' column
 	2.3 'quantity' column
@@ -38,5 +41,6 @@ CLEANING NOTEBOOK
 	Condition 1:
 	Condition 2:
 5 Exporting cleaned dataframe
+
 
 
