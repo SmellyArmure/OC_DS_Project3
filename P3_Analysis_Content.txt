@@ -1,0 +1,25 @@
+ANALYSIS NOTEBOOK
+
+"Concevez une application au service de la santé publique"
+
+
+0 Overview of missing data
+	Imputation
+		Case 1: almost totally filled (>90%), can be infered (median or more frequent)
+	Case 2: missing data <50%, can be infered (model)
+1 Univariate analysis
+	Quantitative data
+	Histograms
+	Normality test
+	Distribution depending on categorical data
+2 Bivariate analysis
+	Time analysis
+	Linear correlation
+	Correlation with Predictive Power Score (decision tree based)
+	Multivariable analysis
+	Clustering
+		KMeans Clustering
+		Hierarchical clustering
+
+
+
