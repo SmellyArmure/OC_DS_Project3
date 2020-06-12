@@ -76,7 +76,7 @@ def naive_model_compare_r2(X_tr, y_tr, X_te, y_te, y_pr):
     for s in ['mean', 'median']:
         dum = DummyRegressor(strategy=s).fit(X_tr, y_tr)
         y_pr_dum = dum.predict(X_te)
-        print('--- dummy regressor ('+ s +'): {:.3}'\
+        print('--- dummy regressor ('+ s +') : r2_score={:.3}'\
               .format(metrics.r2_score(y_te, y_pr_dum)))
 
 def naive_model_compare_acc_f1(X_tr, y_tr, X_te, y_te, y_pr, average='weighted'):
