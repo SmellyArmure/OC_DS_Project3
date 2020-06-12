@@ -14,7 +14,16 @@
  # et pour faire l'imputation :
  df.loc[ind_to_impute, var_target] = y_pr_
 '''
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
 
+from sklearn.dummy import DummyRegressor, DummyClassifier
+from sklearn.feature_extraction import FeatureHasher
+from sklearn.preprocessing import StandardScaler, LabelEncoder
+from sklearn.neighbors import KNeighborsRegressor, KNeighborsClassifier
+from sklearn.model_selection import GridSearchCV, KFold, StratifiedKFold, train_test_split
+from sklearn import metrics
 
 # Data Preprocessing for quantitative and categorical data with encoding options
 def data_preprocessing(df, var_model, var_target, enc_strat_cat='label'):
@@ -56,7 +65,7 @@ def data_preprocessing(df, var_model, var_target, enc_strat_cat='label'):
         y = df_train.iloc[:,-1].values
         return X, y
 
-        def naive_model_compare_r2(X_tr, y_tr, X_te, y_te, y_pr):
+def naive_model_compare_r2(X_tr, y_tr, X_te, y_te, y_pr):
     # Model
     print('--- model: {:.3}'.format(metrics.r2_score(y_te, y_pr)))
     # normal random distribution
@@ -70,25 +79,25 @@ def data_preprocessing(df, var_model, var_target, enc_strat_cat='label'):
         print('--- dummy regressor ('+ s +'): {:.3}'\
               .format(metrics.r2_score(y_te, y_pr_dum)))
 
-def naive_model_compare_acc_f1(X_tr, y_tr, X_te, y_te, y_pr, average='micro'):
+def naive_model_compare_acc_f1(X_tr, y_tr, X_te, y_te, y_pr, average='weighted'):
     print('ooooooo CLASSIFICATION METRICS oooooooo')
-    def f1_acc(yte, ypr):
+    def f1_prec_recall(yte, ypr):
         prec = metrics.precision_score(yte, ypr, average=average)
         rec = metrics.recall_score(yte, ypr, average=average)
         f1 = metrics.f1_score(yte, ypr, average=average)
         return [f1, prec, rec]
     # Model
     print('--- model: f1={:.3}, precision={:.3}, recall={:.3}'\
-                                             .format(*f1_acc(y_te, y_pr)))
-    # dummy classifier
+                                             .format(*f1_prec_recall(y_te, y_pr)))
+    # Dummy classifier
     for s in ['stratified','most_frequent','uniform']:
         dum = DummyClassifier(strategy=s).fit(X_tr, y_tr)
         y_pr_dum = dum.predict(X_te)
         print('--- dummy class. ('+ s\
               +'): f1={:.3}, precision={:.3}, recall={:.3}'\
-                                             .format(*f1_acc(y_te, y_pr_dum)))
+                                             .format(*f1_prec_recall(y_te, y_pr_dum)))
 
-    def plot_hist_pred_val(y_te, y_pr, y_pr_, bins=150, xlim=(0,20), short_lab=False):
+def plot_hist_pred_val(y_te, y_pr, y_pr_, bins=150, xlim=(0,20), short_lab=False):
     # Plotting dispersion of data to be imputed
     bins = plt.hist(y_te, alpha=0.5, color='b', bins=bins, density=True,
                     histtype='step', lw=3, label='y_te (real val. from test set)')[1]
@@ -115,10 +124,10 @@ def naive_model_compare_acc_f1(X_tr, y_tr, X_te, y_te, y_pr, average='micro'):
 def Knn_impute(df, var_model, var_target, enc_strat_cat='label',
                    clip=None, plot=True):
     if df[var_target].isna().sum()==0:
-        print('NOTHING TO IMPUTE')
+        print('ERROR: Nothing to impute (target column already filled)')
         return None, None
     else :
-        if df[var_target].dtype in ['object', 'categories']:
+        if df[var_target].dtype =='object':
             # knn classifier
             skf = StratifiedKFold(n_splits=5, shuffle=True)
             gsCV = GridSearchCV(KNeighborsClassifier(),
@@ -126,13 +135,15 @@ def Knn_impute(df, var_model, var_target, enc_strat_cat='label',
                             cv=skf, return_train_score=True,
                             scoring='f1_weighted')
             mod = 'class'
-        else:
+        elif df[var_target].dtype in ['float64', 'int64']:
             # knn regressor
             kf = KFold(n_splits=5, shuffle=True)
             gsCV = GridSearchCV(KNeighborsRegressor(),
                             {'n_neighbors': [3,5,7,9,11,13]},
                             cv=kf, return_train_score=True)
             mod = 'reg'
+        else:
+            print("ERROR: dtype of target feature unknown")
         ## Data Preprocessing
         X, y = data_preprocessing(df.dropna(subset=var_model+[var_target]),
                                 var_model=var_model, var_target=var_target,
@@ -150,7 +161,7 @@ def Knn_impute(df, var_model, var_target, enc_strat_cat='label',
         # Comparison with naive baselines
         if mod == 'class':
             naive_model_compare_acc_f1(X_tr,y_tr,X_te,y_te,y_pr,average='micro')
-        elif mod == 'class':
+        elif mod == 'reg':
             naive_model_compare_r2(X_tr,y_tr,X_te,y_te,y_pr)
         else:
             print("ERROR: check type of target feature...")
